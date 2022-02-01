@@ -1,11 +1,14 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
-  const name =
-    req.query.nombre !== undefined && req.query.nombre.length > 0
-      ? req.query.nombre
-      : "desconocido";
+app.get("/makers/:name", (req, res) => {
+  function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+
+  const name = req.params.name
+    ? capitalizarPrimeraLetra(req.params.name)
+    : "desconocido";
   res.send(`<h1>Hola ${name}!</h1>`);
 });
 
