@@ -16,6 +16,11 @@ var articleSchema = mongoose.Schema({
 
 var Article = mongoose.model("Article", articleSchema);
 
+var first = new Article({ title: "Artículo 1", body: "Cuerpo del artículo" });
+first.save(function (err) {
+  if (err) return console.error(err);
+});
+
 app.get("/", (req, res, next) => {
   let value = 1;
   while (value < 50) {
