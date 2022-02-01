@@ -1,10 +1,11 @@
 const express = require("express");
 const app = express();
 
-app.get("/", (req, res) => {
-  const value = 1;
+app.get("/", (req, res, next) => {
+  let value = 1;
   while (value < 50) {
-    const typeOfNumber = value % 2 === 0 ? "Par" : "Impar";
+    let typeOfNumber = value % 2 === 0 ? "Par" : "Impar";
+
     res.send(`<p>${value} Soy ${typeOfNumber}!</p>`);
     value += 1;
   }
