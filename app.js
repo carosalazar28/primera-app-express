@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 
 app.post("/", (req, res) => {
   const name = req.body.name;
-  res.status(200).send(`<p>Hola ${name}!</p>`);
+  res.status(200).send(`<h1>Hola ${name}!</h1>`);
 });
 
 app.listen(3000, () => console.log("Listening on port 3000!"));
