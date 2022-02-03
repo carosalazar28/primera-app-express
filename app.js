@@ -28,8 +28,6 @@ const app = express();
 
 app.get("/", (req, res) => {
   const navigator = req.headers["user-agent"];
-
-  res.redirect(`/${navigator}`);
 });
 
 // app.post("/", (req, res) => {
