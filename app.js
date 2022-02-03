@@ -1,5 +1,5 @@
 const express = require("express");
-const path = require("path");
+// const path = require("path");
 const app = express();
 
 // const mongoose = require("mongoose");
@@ -23,16 +23,18 @@ const app = express();
 //   if (err) return console.error(err);
 // });
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "index.html"));
+  const navigator = req.headers["user-agent"];
+
+  res.redirect(`/${navigator}`);
 });
 
-app.post("/", (req, res) => {
-  const name = req.body.name;
-  res.status(200).send(`<h1>Hola ${name}!</h1>`);
-});
+// app.post("/", (req, res) => {
+//   const name = req.body.name;
+//   res.status(200).send(`<h1>Hola ${name}!</h1>`);
+// });
 
 app.listen(3000, () => console.log("Listening on port 3000!"));
