@@ -1,5 +1,7 @@
 const express = require("express");
+const path = require("path");
 const app = express();
+
 // const mongoose = require("mongoose");
 
 // connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
@@ -21,14 +23,16 @@ const app = express();
 //   if (err) return console.error(err);
 // });
 
-app.get("/", (req, res, next) => {
-  let typeOfNumber;
-  for (let i = 1; i <= 50; i += 1) {
-    typeOfNumber = i % 2 === 0 ? "Par" : "Impar";
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "public")));
 
-    res.write(`<p>${i} Soy ${typeOfNumber}!</p>`);
-  }
-  res.end();
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
+
+app.post("/", (req, res) => {
+  const name = req.body.name;
+  res.status(200).send(`<p>Hola ${name}!</p>`);
 });
 
 app.listen(3000, () => console.log("Listening on port 3000!"));
