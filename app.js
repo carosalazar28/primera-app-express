@@ -30,7 +30,7 @@ var Visitor = mongoose.model("Visitor", visitorSchema);
 // app.use(express.urlencoded({ extended: false }));
 // app.use(express.static(path.join(__dirname, "public")));
 
-app.get("/", (req, res) => {
+app.post("/", (req, res) => {
   const requestName =
     req.query.name !== undefined && req.query.name.length > 0
       ? req.query.name
@@ -38,10 +38,10 @@ app.get("/", (req, res) => {
 
   const date = new Date(Date.now());
 
-  const visitor = new Visitor({ name: requestName });
+  const visitor = new Visitor({ date, name: requestName });
 
   if (!visitor) throw new Error("visitor does not created");
-  console.log("here", visitor);
+  // console.log("here", visitor);
 
   res.status(200).send("<h1>El visitante fue almacenado con éxito</h1>");
 });
