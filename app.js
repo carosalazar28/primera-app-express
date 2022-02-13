@@ -1,22 +1,31 @@
+require("dotenv").config();
 const express = require("express");
 // const path = require("path");
 const app = express();
 
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
+mongoose.connect(
+  process.env.MONGODB_URL || "mongodb://localhost:27017/mongo-1",
+  { useNewUrlParser: true }
+);
 // connect("mongodb://localhost:27017/test", { useNewUrlParser: true });
 
-// connection.on("error", function (e) {
-//   console.error(e);
-// });
+mongoose.connection.on("error", function (e) {
+  console.error(e);
+});
 
-// var articleSchema = mongoose.Schema({
-//   title: String,
-//   body: String,
-//   published: { type: Boolean, default: false },
-// });
+var visitorSchema = mongoose.Schema(
+  {
+    date: Date,
+    name: String,
+  },
+  {
+    timestamps: true,
+  }
+);
 
-// var Article = mongoose.model("Article", articleSchema);
+var Visitor = mongoose.model("Visitor", visitorSchema);
 
 // var first = new Article({ title: "Artículo 1", body: "Cuerpo del artículo" });
 // first.save(function (err) {
@@ -27,7 +36,18 @@ const app = express();
 // app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res) => {
-  const navigator = req.headers["user-agent"];
+  const requestName =
+    req.query.name !== undefined && req.query.name.length > 0
+      ? req.query.name
+      : "Anónimo";
+
+  const date = new Date(Date.now());
+
+  const visitor = new Visitor({ date, name: requestName });
+
+  if (!visitor) throw new Error("visitor does not created");
+
+  res.status(200).send("<h1>El visitante fue almacenado con éxito</h1>");
 });
 
 // app.post("/", (req, res) => {
