@@ -15,15 +15,10 @@ mongoose.connection.on("error", function (e) {
   console.error(e);
 });
 
-var visitorSchema = mongoose.Schema(
-  {
-    date: Date,
-    name: String,
-  },
-  {
-    timestamps: true,
-  }
-);
+var visitorSchema = mongoose.Schema({
+  date: Date,
+  name: String,
+});
 
 var Visitor = mongoose.model("Visitor", visitorSchema);
 
@@ -43,9 +38,10 @@ app.get("/", (req, res) => {
 
   const date = new Date(Date.now());
 
-  const visitor = new Visitor({ date, name: requestName });
+  const visitor = new Visitor({ name: requestName });
 
   if (!visitor) throw new Error("visitor does not created");
+  console.log("here", visitor);
 
   res.status(200).send("<h1>El visitante fue almacenado con éxito</h1>");
 });
